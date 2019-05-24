@@ -8,3 +8,6 @@ source "${DOTROOT}/bashrc/.default"
 source "${DOTROOT}/bashrc/.env"
 source "${DOTROOT}/bashrc/.alias"
 source "${DOTROOT}/bashrc/.fun"
+
+# host-specific setup files
+source "${DOTROOT}/bashrc/.host"
