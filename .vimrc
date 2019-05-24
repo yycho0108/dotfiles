@@ -130,7 +130,7 @@ set undofile
 " Youcompleteme
 let g:ycm_server_python_interpreter= '/usr/bin/python2'
 let g:ycm_python_binary_path = '/usr/bin/python3'
-let g:ycm_global_ycm_extra_conf = '/home/jamie/.vim/.ycm_extra_conf.py' 
+let g:ycm_global_ycm_extra_conf = $HOME . '/.vim/.ycm_extra_conf.py' 
 
 " Closetag
 let g:closetag_filenames = '*.xml,*.html,*.xhtml,*.phtml,*.launch,*.world,*.config,*.sdf,*.xacro'
