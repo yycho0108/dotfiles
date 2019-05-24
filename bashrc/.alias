@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# cd alias
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# ls alias
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias lt='ls -lrth'
+
+# custom and somewhat specific
+alias x='exit'
+alias resource='source ${HOME}/.bashrc'
+alias gopen='gnome-open'
+alias jlab="PYTHONPATH=/usr/local/lib/python2.7/dist-packages/:/usr/lib/python2.7/dist-packages BROWSER='chromium-browser' jupyter lab"
+alias giturl="git remote -v | head -n 1 | awk '{print \$2}'"
+
