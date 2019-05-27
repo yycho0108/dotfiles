@@ -174,3 +174,5 @@ set tabpagemax=100
 autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 
 set relativenumber
+
+nnoremap <leader>r :! chmod +x %:p && %:p<Enter>
