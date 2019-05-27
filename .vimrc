@@ -36,6 +36,7 @@ Plugin 'https://github.com/tpope/vim-repeat.git'
 Plugin 'https://github.com/tpope/vim-commentary.git'
 Plugin 'https://github.com/kana/vim-textobj-user.git'
 Plugin 'https://github.com/tkhren/vim-textobj-numeral.git'
+Plugin 'michaeljsmith/vim-indent-object'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
