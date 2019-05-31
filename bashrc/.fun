@@ -144,7 +144,7 @@ function search-rosdeps(){
     find -name 'CMakeLists.txt' -exec sh -c 'grep -Poz find_package(.*)' \;
 }
 
-function ogv2gif(){
+function make-gif(){
     inputFile=$1
     FPS=30.0
     WIDTH=640
@@ -160,9 +160,11 @@ function ogv2gif(){
     echo "input : $inputFile fps : $FPS width : $WIDTH"
 
     ##Generate palette for better quality
+    echo "Please wait while generating palette ..."
     ffmpeg -i $inputFile -vf fps=$FPS,scale=$WIDTH:-1:flags=lanczos,palettegen tmp_palette.png
 
     ##Generate gif using palette
+    echo "Generating GIF ..."
     ffmpeg -i $inputFile -i tmp_palette.png -loop 0 -filter_complex "fps=$FPS,scale=$WIDTH:-1:flags=lanczos[x];[x][1:v]paletteuse" output.gif
 
     rm tmp_palette.png

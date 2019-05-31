@@ -83,9 +83,6 @@ let mapleader = ","
 nnoremap ; :
 vnoremap ; :
 
-" So we don't have to reach for escape to leave insert mode.
-inoremap jf <esc>
-
 " create new vsplit, and switch to it.
 noremap <leader>v <C-w>v
 
@@ -101,6 +98,9 @@ noremap <leader><space> :noh<cr>:call clearmatches()<cr>
 " Quick buffer switching - like cmd-tab'ing
 nnoremap <leader><leader> <c-^>
 
+" jump alias only because I can't remember <C-i> ...
+noremap <leader>jl <C-i>
+noremap <leader>jh <C-o>
 
 " Visual line nav, not real line nav
 " If you wrap lines, vim by default won't let you move down one line to the
@@ -113,7 +113,7 @@ noremap k gk
 " referenced.
 
 " Map the key for toggling comments with vim-commentary
-nnoremap <leader>c <Plug>CommentaryLine
+" nnoremap <leader>c <Plug>Commentary
 
 " Remap ctrlp to ctrl-t -- map it however you like, or stick with the
 " defaults. Additionally, in my OS, I remap caps lock to control. I never use
@@ -125,13 +125,16 @@ let g:ctrlp_max_height = 30
 
 " Finally the color scheme. Choose whichever you want from the list in the
 " link above (back up where we included the bundle of a ton of themes.)
-colorscheme elflord
+"colorscheme elflord
 set undofile
 
 " Youcompleteme
 let g:ycm_server_python_interpreter= '/usr/bin/python2'
 let g:ycm_python_binary_path = '/usr/bin/python2'
 let g:ycm_global_ycm_extra_conf = $HOME . '/.vim/.ycm_extra_conf.py' 
+let g:ycm_goto_buffer_command = 'new-tab'
+nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>jD :YcmCompleter GoToDeclaration<CR>
 
 " Closetag
 let g:closetag_filenames = '*.xml,*.html,*.xhtml,*.phtml,*.launch,*.world,*.config,*.sdf,*.xacro'
@@ -176,4 +179,5 @@ autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 
 set relativenumber
 
-nnoremap <leader>r :! chmod +x %:p && %:p<Enter>
+nnoremap <leader>r :w \| ! chmod +x %:p && %:p<Enter>
+nnoremap <leader>s :%s/\<<C-r><C-w>\>/
