@@ -6,6 +6,13 @@
 LIBS_DIR="${HOME}/libs"
 mkdir -p "${LIBS_DIR}"
 
+# my prefered directory structure
+build_dir(){
+    mkdir -p "${HOME}/libs"
+    mkdir -p "${HOME}/Miscellaneous"
+    mkdir -p "${HOME}/Repos"
+}
+
 # system
 build_sys(){
     sudo apt update
