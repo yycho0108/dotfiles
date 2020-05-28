@@ -76,3 +76,7 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+for bcfile in ~/.bash_completion.d/* ; do
+  [ -f "$bcfile" ] && . $bcfile
+done

@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# ROS_DISTRO='melodic'
+# source /opt/ros/${ROS_DISTRO}/setup.bash
+# source ${HOME}/catkin_ws/devel/setup.bash
+
+#function list-rosdeps(){
+#	src="$1"
+#	d0="$PWD"
+#	echo "inspecting package $src"
+#	roscd "$src"
+#	for pkg in $(rospack list | awk '{print $1}'); do
+#		cnt=$(grep -hrIc $pkg . --exclude-dir=".git" | paste -sd+ | bc)
+#		if [ "$cnt" -gt "0" ]; then
+#			echo $pkg $cnt
+#		fi
+#	done
+#	cd "$d0"
+#}
+
+
+#function search-rosdeps(){
+#    # package.xml (build)
+#    find -name package.xml -exec sh -c 'grep -i depend {} | sed "s@.*>\(.*\)<.*@\1@"' \;
+#    # python deps (runtime)
+#    find -name '*.py' -exec grep import {} \;
+#    # launch deps (runtime)
+#    find -name '*.launch' -exec sh -c 'grep find {} | sed "s@.*find\(.*\)).*@\1@"' \;
+#    # cmake deps
+#    find -name 'CMakeLists.txt' -exec sh -c 'grep -Poz find_package(.*)' \;
+#}
+
+#function gzkill(){
+#	killall -9 gazebo gzserver gzclient
+#}

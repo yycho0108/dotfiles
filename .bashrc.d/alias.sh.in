@@ -26,6 +26,16 @@ alias lt='ls -lrth'
 alias x='exit'
 alias resource='source ${HOME}/.bashrc'
 alias gopen='gnome-open'
-alias jlab="PYTHONPATH=/usr/local/lib/python2.7/dist-packages/:/usr/lib/python2.7/dist-packages BROWSER='chromium-browser' jupyter lab"
+# alias jlab="PYTHONPATH=/usr/local/lib/python3.5/dist-packages/:/usr/lib/python3.5/dist-packages BROWSER='chromium-browser' jupyter lab"
+alias jlab='jupyter lab'
 alias giturl="git remote -v | head -n 1 | awk '{print \$2}'"
 
+alias ln='ln -srf'
+
+# alias python=python3
+alias renet='sudo service network-manager restart'
+
+alias vim='vim -p'
+alias vi='vim'
+
+alias vprof='valgrind --tool=callgrind --collect-atstart=no'

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+for rcfile in "${DOTROOT}/.bashrc.d/lib/"*.sh.in; do
+    source "${rcfile}";
+done

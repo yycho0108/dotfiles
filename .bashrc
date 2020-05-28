@@ -1,13 +1,9 @@
 # NOTE: source order is important!
 
-# figure out ROOT directory
-DOTROOT=$(dirname $(realpath "$HOME/.bashrc"))
+# Figure out ROOT directory.
+export DOTROOT=$(dirname $(realpath "$HOME/.bashrc"))
 
-# generic setup files
-source "${DOTROOT}/bashrc/.default"
-source "${DOTROOT}/bashrc/.env"
-source "${DOTROOT}/bashrc/.alias"
-source "${DOTROOT}/bashrc/.fun"
-
-# host-specific setup files
-source "${DOTROOT}/bashrc/.host"
+# Generic order-independent setup files.
+for rcfile in "${DOTROOT}/.bashrc.d/"*.sh.in; do
+    source "${rcfile}";
+done

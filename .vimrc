@@ -23,6 +23,8 @@
 set nocompatible " Fuck VI... That's for grandpas.
 filetype off
 
+let g:vundle_default_git_proto = 'git'
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -36,7 +38,23 @@ Plugin 'https://github.com/tpope/vim-repeat.git'
 Plugin 'https://github.com/tpope/vim-commentary.git'
 Plugin 'https://github.com/kana/vim-textobj-user.git'
 Plugin 'https://github.com/tkhren/vim-textobj-numeral.git'
+Plugin 'glts/vim-textobj-comment.git'
 Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'vhdirk/vim-cmake'
+Plugin 'skywind3000/asyncrun.vim'
+Plugin 'tell-k/vim-autopep8'
+Plugin 'rhysd/vim-clang-format'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-eunuch'
+Plugin 'Chiel92/vim-autoformat'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'panozzaj/vim-autocorrect'
+Plugin 'StanAngeloff/php.vim' 
+Plugin 'AndrewRadev/sideways.vim'
+Plugin 'DoxygenToolkit.vim'
+Plugin 'yycho0108/vim-toop'
+Plugin 'yycho0108/DoxAlign.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -65,6 +83,7 @@ set autoread " when a file has changed on disk, just load it. Don't ask.
 
 " Make search more sane
 set ignorecase " case insensitive search
+set wildignorecase " Enable case insensitive search for filenames as well.
 set smartcase " If there are uppercase letters, become case-sensitive.
 set incsearch " live incremental searching
 set showmatch " live match highlighting
@@ -113,7 +132,7 @@ noremap k gk
 " referenced.
 
 " Map the key for toggling comments with vim-commentary
-" nnoremap <leader>c <Plug>Commentary
+nnoremap <leader>c <Plug>Commentary
 
 " Remap ctrlp to ctrl-t -- map it however you like, or stick with the
 " defaults. Additionally, in my OS, I remap caps lock to control. I never use
@@ -129,18 +148,26 @@ let g:ctrlp_max_height = 30
 set undofile
 
 " Youcompleteme
-let g:ycm_server_python_interpreter= '/usr/bin/python2'
-let g:ycm_python_binary_path = '/usr/bin/python2'
-let g:ycm_global_ycm_extra_conf = $HOME . '/.vim/.ycm_extra_conf.py' 
+let g:ycm_server_python_interpreter= '/usr/bin/python3'
+let g:ycm_python_binary_path = '/usr/bin/python3'
+let g:ycm_global_ycm_extra_conf = $HOME . '/.vim/.ycm_extra_conf.py'
 let g:ycm_goto_buffer_command = 'new-tab'
+let g:ycm_log_level = 'debug'
+let g:ycm_use_clangd = 0
+let g:ycm_auto_hover = ''
+nnoremap <leader>D <plug>(YCMHover)
 nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>jD :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>ji :YcmCompleter GoToInclude<CR>
 
 " Closetag
 let g:closetag_filenames = '*.xml,*.html,*.xhtml,*.phtml,*.launch,*.world,*.config,*.sdf,*.xacro'
 let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
 let g:closetag_emptyTags_caseSensitive = 1
 let g:closetag_shortcut = '>'
+
+" Vim.CMake
+let g:cmake_export_compile_commands = 1
 
 autocmd BufNewFile,BufReadPost *.launch set filetype=xml
 autocmd BufNewFile,BufReadPost *.world set filetype=xml
@@ -149,16 +176,17 @@ autocmd BufNewFile,BufReadPost *.sdf set filetype=xml
 autocmd BufNewFile,BufReadPost *.urdf set filetype=xml
 autocmd BufNewFile,BufReadPost *.xacro set filetype=xml
 
+" TODO(yycho0108): I don't actually know what this does.
 if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 " Paste without Yank
 "
 " I haven't found how to hide this function (yet)
 function! RestoreRegister()
-  let @" = s:restore_reg
-  return ''
+    let @" = s:restore_reg
+    return ''
 endfunction
 
 function! s:Repl()
@@ -175,9 +203,73 @@ vnoremap <silent> <expr> p <sid>Repl()
 " nmap <silent> <A-Right> :wincmd l<CR>
 set showcmd
 set tabpagemax=100
-autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
+" autocmd BufNewFile,BufRead * setlocal formatoptions-=c
 
 set relativenumber
 
-nnoremap <leader>r :w \| ! chmod +x %:p && %:p<Enter>
+" Replace current word
 nnoremap <leader>s :%s/\<<C-r><C-w>\>/
+
+" default: execute 'current file'
+nnoremap <leader>r :w \| term %:p<Enter>
+" make an exception for python ...
+autocmd FileType python nnoremap <leader>r :w \| !python3 %:p<Enter>
+autocmd FileType cpp nnoremap <leader>r :w \| :CMake<Enter>
+
+" formatter ...
+" autocmd FileType python nnoremap <leader>f :Autopep8<Enter>
+" autocmd FileType cpp nnoremap <leader>f :ClangFormat<Enter>
+nnoremap <leader>f :Autoformat<Enter>
+
+" override =
+autocmd FileType python set equalprg=autopep8\ -
+
+
+set backspace=indent,eol,start
+" set splitbelow "vim 8.1 terminal setting
+
+let g:autopep8_disable_show_diff=1
+let g:autopep8_max_line_length=79
+
+set wildmode=longest,list,full
+set wildmenu
+set ruler
+set nowrap
+
+" Format XML files nicely.
+com! FormatXML :%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
+
+" setlocal commentstring=//\ %s
+autocmd FileType c,cpp,cs,java,php setlocal commentstring=//\ %s
+
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap <leader>a <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap <leader>a <Plug>(EasyAlign)
+
+set matchpairs+=<:>
+
+" cmake-format configuration
+let g:formatdef_my_cmake = '"cmake-format - --tab-size 2 --line-width 79"'
+let g:formatters_cmake = ['my_cmake']
+
+" JSON configuration
+let g:formatdef_my_json = '"python3 -m json.tool"'
+let g:formatters_json = ['my_json']
+
+" vim-sideways
+omap aa <Plug>SidewaysArgumentTextobjA
+xmap aa <Plug>SidewaysArgumentTextobjA
+omap ia <Plug>SidewaysArgumentTextobjI
+xmap ia <Plug>SidewaysArgumentTextobjI
+
+nmap <leader>h :SidewaysJumpLeft<cr>
+nmap <leader>l :SidewaysJumpRight<cr>
+nmap <leader>xh :SidewaysLeft<cr>
+nmap <leader>xl :SidewaysRight<cr>
+
+" DoxAlign
+call toop#mapFunction('DoxAlign', "<leader>da")"
+
+set autochdir

@@ -26,7 +26,7 @@ build_sys(){
 
     # pip
     curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
-    python2 /tmp/get-pip.py # TODO : upgrade myself to python3
+    python3 /tmp/get-pip.py # TODO : upgrade myself to python3
 
     # misc (but important?)
     sudo apt install openssh-client openssh-server
@@ -108,3 +108,5 @@ build(){
     build_py
     build_vim
 }
+
+build_vim

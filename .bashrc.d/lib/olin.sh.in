@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+export OLIN_NWMNT="${HOME}/Miscellaneous/NWdrive";
+
+function olin-nwmount(){
+	mkdir -p "${OLIN_NWMNT}/sandbox"
+	mkdir -p "${OLIN_NWMNT}/public"
+	mkdir -p "${OLIN_NWMNT}/ycho"
+	mkdir -p "${OLIN_NWMNT}/research"
+	sudo mount "//fsvs01/Research" ${OLIN_NWMNT}/research -o user=ycho,workgroup=olin.edu,uid=jamiecho
+	sudo mount "//fsvs01/Sandbox" ${OLIN_NWMNT}/sandbox -o user=ycho,workgroup=olin.edu,uid=jamiecho
+	sudo mount "//fsvs01/Public" ${OLIN_NWMNT}/public -o user=ycho,workgroup=olin.edu,uid=jamiecho
+	sudo mount "//fsvs01/Users/Students/2019/ycho" ${OLIN_NWMNT}/ycho -o user=ycho,workgroup=olin.edu,uid=jamiecho
+}
+
+function olin-nwumount(){
+	sudo umount ${OLIN_NWMNT}/research
+	sudo umount ${OLIN_NWMNT}/sandbox
+	sudo umount ${OLIN_NWMNT}/public
+	sudo umount ${OLIN_NWMNT}/ycho
+}
