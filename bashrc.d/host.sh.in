@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-function mhwkill(){
+mhwkill(){
     local processes="$(ps -ef | grep Monster -iI | grep -v -- grep | awk '{print $2}')"
     if [ -z "${processes}" ]; then
         echo "No MHW Process Running"
@@ -8,4 +8,8 @@ function mhwkill(){
         echo "Killing : ${processes}"
         kill -9 ${processes}
     fi
+}
+
+tf_begin(){
+    source "${HOME}/Repos/Ravel/Venvs/tf_env/bin/activate"
 }

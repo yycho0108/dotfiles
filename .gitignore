@@ -52,4 +52,4 @@ tags
 # End of https://www.gitignore.io/api/git,vim,linux
 
 # ignore host-specific configuration.
-.bashrc.d/host.bashrc
+bashrc.d/host.bashrc

@@ -26,6 +26,7 @@ filetype off
 let g:vundle_default_git_proto = 'git'
 
 set rtp+=~/.vim/bundle/Vundle.vim
+set runtimepath+=~/.vim/bundle/YouCompleteMe/
 call vundle#begin()
 
 " let Vundle manage Vundle, required
@@ -148,12 +149,14 @@ let g:ctrlp_max_height = 30
 set undofile
 
 " Youcompleteme
+"
+let g:ycm_use_clangd = 1
+" let g:ycm_clangd_binary_path = $HOME . "/.vim/bundle/YouCompleteMe/third_party/ycmd/third_party/clangd/output/bin/clangd"
 let g:ycm_server_python_interpreter= '/usr/bin/python3'
 let g:ycm_python_binary_path = '/usr/bin/python3'
 let g:ycm_global_ycm_extra_conf = $HOME . '/.vim/.ycm_extra_conf.py'
 let g:ycm_goto_buffer_command = 'new-tab'
 let g:ycm_log_level = 'debug'
-let g:ycm_use_clangd = 0
 let g:ycm_auto_hover = ''
 nnoremap <leader>D <plug>(YCMHover)
 nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>

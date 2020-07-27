@@ -97,35 +97,6 @@ function watermark(){
     fi
 }
 
-function make-gif(){
-    inputFile=$1
-
-    FPS="${2:-30}"
-    WIDTH="${3:-640}"
-    SKIP="${4:-1}"
-    OUTFILE="${5:-/tmp/output.gif}"
-
-	if [[ "$#" -ge 2 ]]; then
-        FPS=$2
-    fi
-
-	if [[ "$#" -ge 3 ]]; then
-        WIDTH=$3
-    fi
-
-    echo "input : $inputFile fps : $FPS width : $WIDTH out : ${OUTFILE}"
-
-    ##Generate palette for better quality
-    echo "Please wait while generating palette ..."
-    ffmpeg -i "$inputFile" -vf fps=$FPS,scale=$WIDTH:-1:flags=lanczos,palettegen /tmp/tmp_palette.png
-
-    ##Generate gif using palette
-    echo "Generating GIF ..."
-    ffmpeg -i "$inputFile" -i /tmp/tmp_palette.png -loop 0 -filter_complex "setpts=N/($FPS*$SKIP)/TB,fps=${FPS},scale=$WIDTH:-1:flags=lanczos[x];[x][1:v]paletteuse" "${OUTFILE}"
-
-    rm /tmp/tmp_palette.png
-}
-
 function echo-latest-file(){
     unset -v latest
     d="$PWD"
