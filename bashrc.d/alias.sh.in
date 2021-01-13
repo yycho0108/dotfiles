@@ -14,7 +14,10 @@ fi
 
 # cd alias
 alias ..='cd ..'
-alias ...='cd ../..'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
+alias ......='cd ../../../../../'
 
 # ls alias
 alias ll='ls -alF'

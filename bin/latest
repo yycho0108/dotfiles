@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+
+from pathlib import Path
+import sys
+import argparse
+import logging
+
+
+def parse_args(args):
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+    parser.add_argument('-p', '--pattern', help='File filter',
+                        type=str, default='*')
+    parser.add_argument('-d', '--directory', help='Directory',
+                        type=str, default=str(Path.cwd().resolve()))
+    parser.add_argument('-f', '--file-only', help='Only include files',
+                        action='store_true')
+    return parser.parse_args(args)
+
+
+def main(args=sys.argv[1:]):
+    args = parse_args(args)
+    root = Path(args.directory)
+    if not root.is_dir():
+        logging.error('Invalid directory : {}'.format(root))
+        return 1
+    logging.debug(args)
+    files = root.glob(args.pattern)
+    # Optionally filter to files only.
+    if args.file_only:
+        files = [f for f in files if f.is_file()]
+    latest = max(files, key=lambda f: f.stat().st_mtime)
+    print(latest)
+    return 0
+
+
+if __name__ == '__main__':
+    main()

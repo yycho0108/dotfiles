@@ -40,6 +40,7 @@ Plugin 'https://github.com/tpope/vim-commentary.git'
 Plugin 'https://github.com/kana/vim-textobj-user.git'
 Plugin 'https://github.com/tkhren/vim-textobj-numeral.git'
 Plugin 'glts/vim-textobj-comment.git'
+Plugin 'kana/vim-textobj-function'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'vhdirk/vim-cmake'
 Plugin 'skywind3000/asyncrun.vim'
@@ -149,7 +150,6 @@ let g:ctrlp_max_height = 30
 set undofile
 
 " Youcompleteme
-"
 let g:ycm_use_clangd = 1
 " let g:ycm_clangd_binary_path = $HOME . "/.vim/bundle/YouCompleteMe/third_party/ycmd/third_party/clangd/output/bin/clangd"
 let g:ycm_server_python_interpreter= '/usr/bin/python3'
@@ -158,10 +158,13 @@ let g:ycm_global_ycm_extra_conf = $HOME . '/.vim/.ycm_extra_conf.py'
 let g:ycm_goto_buffer_command = 'new-tab'
 let g:ycm_log_level = 'debug'
 let g:ycm_auto_hover = ''
+let g:ycm_clangd_args=['--header-insertion=never', '--cross-file-rename']
 nnoremap <leader>D <plug>(YCMHover)
 nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>jD :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>ji :YcmCompleter GoToInclude<CR>
+nnoremap <leader>x :YcmCompleter FixIt<Enter>
+nnoremap <leader>s :YcmCompleter RefactorRename 
 
 " Closetag
 let g:closetag_filenames = '*.xml,*.html,*.xhtml,*.phtml,*.launch,*.world,*.config,*.sdf,*.xacro'
@@ -211,13 +214,16 @@ set tabpagemax=100
 set relativenumber
 
 " Replace current word
-nnoremap <leader>s :%s/\<<C-r><C-w>\>/
+nnoremap <leader>S :%s/\<<C-r><C-w>\>/
 
 " default: execute 'current file'
 nnoremap <leader>r :w \| term %:p<Enter>
 " make an exception for python ...
 autocmd FileType python nnoremap <leader>r :w \| !python3 %:p<Enter>
 autocmd FileType cpp nnoremap <leader>r :w \| :CMake<Enter>
+
+autocmd FileType cpp setlocal formatoptions=crql
+autocmd FileType cuda setlocal formatoptions=crql
 
 " formatter ...
 " autocmd FileType python nnoremap <leader>f :Autopep8<Enter>
@@ -243,7 +249,7 @@ set nowrap
 com! FormatXML :%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
 
 " setlocal commentstring=//\ %s
-autocmd FileType c,cpp,cs,java,php setlocal commentstring=//\ %s
+autocmd FileType c,cpp,cs,java,php,cuda setlocal commentstring=//\ %s
 
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -261,6 +267,9 @@ let g:formatters_cmake = ['my_cmake']
 let g:formatdef_my_json = '"python3 -m json.tool"'
 let g:formatters_json = ['my_json']
 
+let g:formatters_cuda = ['clangformat']
+" let g:autoformat_verbosemode=1
+
 " vim-sideways
 omap aa <Plug>SidewaysArgumentTextobjA
 xmap aa <Plug>SidewaysArgumentTextobjA
@@ -276,3 +285,5 @@ nmap <leader>xl :SidewaysRight<cr>
 call toop#mapFunction('DoxAlign', "<leader>da")"
 
 set autochdir
+autocmd VimLeave * call system("xsel -ib", getreg('+'))
+

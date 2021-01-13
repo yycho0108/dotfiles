@@ -1,0 +1,47 @@
+# Movidius
+# export PYTHONPATH="${PYTHONPATH}:/opt/movidius/caffe/python"
+
+# Android
+export PATH=$PATH:$HOME/Applications/android-sdk/platform-tools:$HOME/Applications/android-sdk/tools:$HOME/Applications/android-studio/bin
+export ANDROID_HOME=${HOME}/Applications/android-sdk
+
+# Arduino
+export PATH=$PATH:$HOME/Downloads/arduino-1.8.5-linux64/arduino-1.8.5
+
+# OpenCV4
+function cv4-init(){
+    export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/lib/"
+    export PYTHONPATH="/usr/local/lib/python2.7/dist-packages/cv2/:$PYTHONPATH"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib/"
+}
+
+# ROS
+# source /opt/ros/kinetic/setup.bash
+#source ~/libs/android_core/devel/setup.bash
+# source ~/catkin_ws/devel/setup.bash --extend
+# source ~/rll_ws/devel/setup.bash --extend
+# source ~/comprobo_ws/devel/setup.bash --extend
+# source ~/carto_ws/devel_isolated/setup.bash --extend
+# export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:"/home/jamie/Repos/ORB_SLAM2/Examples/ROS"
+stty -ixon
+
+alias catkin-build-this='catkin build $(grep -r name --include="package.xml" | sed "s/.*name>\(.*\)<\/.*/\1/")'
+
+# 3D Gems
+for d in ~/Downloads/3DGEMS/*/; do
+    export GAZEBO_MODEL_PATH="${GAZEBO_MODEL_PATH}:$d"
+done
+
+# Turtlebot
+export TURTLEBOT_BASE='kobuki'
+export TURTLEBOT_BATTERY='None'
+export TURTLEBOT_STACKS='hexagons'
+export TURTLEBOT_3D_SENSOR='kinect'
+export TURTLEBOT_SIMULATION='False'
+export TURTLEBOT_SERIAL_PORT='/dev/ttyUSB0'
+
+# MISC
+export FN_REPO="${HOME}/Repos/flownet2-tf/src/"
+
+# LCM
+export LCM_INSTALL_DIR='/usr/local/lib'

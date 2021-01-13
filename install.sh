@@ -81,11 +81,11 @@ build_vim(){
     pushd "${LIBS_DIR}"
     git clone https://github.com/vim/vim.git
     ./configure --with-features=huge \
-        --enable-pythoninterp=yes \
+        --enable-pythoninterp=false \
         --with-python-config-dir='/usr/lib/python2.7/config' \
         --enable-python3interp=yes \
-        --with-python3-config-dir='/usr/lib/python3.5/config' \
-        --enable-gui=gtk2 \
+        --with-python3-config-dir='/usr/lib/python3.6/config' \
+        --enable-gui=gnome \
         --enable-cscope \
         --enable-terminal
     make -j8 VIMRUNTIMEDIR=/usr/local/share/vim/vim81
