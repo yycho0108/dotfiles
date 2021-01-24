@@ -106,10 +106,7 @@ build_vim(){
     vim +PluginInstall +qall
 
     # youcompleteme : follow-up steps
-    # may require the following steps:
-    # sudo pip2 install --upgrade pyopenssl
-    # sudo python -m easy_install --upgrade pyOpenSSL
-    ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
+    ~/.vim/bundle/YouCompleteMe/install.py --clangd-completer
 }
 
 build(){

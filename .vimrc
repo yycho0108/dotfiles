@@ -51,9 +51,11 @@ Plugin 'tpope/vim-eunuch'
 Plugin 'Chiel92/vim-autoformat'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'panozzaj/vim-autocorrect'
-Plugin 'StanAngeloff/php.vim' 
+Plugin 'StanAngeloff/php.vim'
 Plugin 'AndrewRadev/sideways.vim'
 Plugin 'DoxygenToolkit.vim'
+Plugin 'pixelneo/vim-python-docstring'
+" Plugin 'zxqfl/tabnine-vim'
 Plugin 'yycho0108/vim-toop'
 Plugin 'yycho0108/DoxAlign.vim'
 
@@ -152,6 +154,7 @@ set undofile
 " Youcompleteme
 let g:ycm_use_clangd = 1
 " let g:ycm_clangd_binary_path = $HOME . "/.vim/bundle/YouCompleteMe/third_party/ycmd/third_party/clangd/output/bin/clangd"
+let g:ycm_clangd_args = ["--completion-style=detailed"]
 let g:ycm_server_python_interpreter= '/usr/bin/python3'
 let g:ycm_python_binary_path = '/usr/bin/python3'
 let g:ycm_global_ycm_extra_conf = $HOME . '/.vim/.ycm_extra_conf.py'
@@ -215,6 +218,10 @@ set relativenumber
 
 " Replace current word
 nnoremap <leader>S :%s/\<<C-r><C-w>\>/
+" Supported through jedi
+autocmd FileType python nnoremap <leader>s :YcmCompleter RefactorRename 
+" Supported through clangd
+autocmd FileType cpp nnoremap <leader>s :YcmCompleter RefactorRename 
 
 " default: execute 'current file'
 nnoremap <leader>r :w \| term %:p<Enter>
@@ -229,6 +236,7 @@ autocmd FileType cuda setlocal formatoptions=crql
 " autocmd FileType python nnoremap <leader>f :Autopep8<Enter>
 " autocmd FileType cpp nnoremap <leader>f :ClangFormat<Enter>
 nnoremap <leader>f :Autoformat<Enter>
+nnoremap <leader>x :YcmCompleter FixIt<Enter>
 
 " override =
 autocmd FileType python set equalprg=autopep8\ -
@@ -280,6 +288,8 @@ nmap <leader>h :SidewaysJumpLeft<cr>
 nmap <leader>l :SidewaysJumpRight<cr>
 nmap <leader>xh :SidewaysLeft<cr>
 nmap <leader>xl :SidewaysRight<cr>
+
+nmap <leader>d :Docstring<cr>
 
 " DoxAlign
 call toop#mapFunction('DoxAlign', "<leader>da")"
