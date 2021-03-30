@@ -26,23 +26,22 @@ build_sys(){
 
     # pip
     curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
-    python3 /tmp/get-pip.py # TODO : upgrade myself to python3
+    python3 /tmp/get-pip.py
 
     # misc (but important?)
     sudo apt install openssh-client openssh-server
     sudo apt install dtrx # unified decompression interface 
-
-    # TODO : add other things if they come up
+    sudo apt install autojump
 }
 
 # python
 build_py(){
-    pip2 install -U pip
-    sudo pip2 install setuptools
-    pip2 install numpy --user --upgrade
-    pip2 install scipy --user --upgrade # requires some deps? don't remember
-    pip2 install sympy --user --upgrade
-    pip2 install matplotlib --user --upgrade
+    pip3 install -U pip
+    pip3 install setuptools --user --upgrade
+    pip3 install numpy --user --upgrade
+    pip3 install scipy --user --upgrade # requires some deps? don't remember
+    pip3 install sympy --user --upgrade
+    pip3 install matplotlib --user --upgrade
 }
 
 # ROS
@@ -80,16 +79,20 @@ build_vim(){
     # build vim from source
     pushd "${LIBS_DIR}"
     git clone https://github.com/vim/vim.git
+    pushd vim
     ./configure --with-features=huge \
-        --enable-pythoninterp=false \
-        --with-python-config-dir='/usr/lib/python2.7/config' \
+        --enable-pythoninterp=no \
+        --with-python-config-dir="$(python2-config --configdir)" \
         --enable-python3interp=yes \
-        --with-python3-config-dir='/usr/lib/python3.6/config' \
-        --enable-gui=gnome \
+        --with-python3-config-dir="$(python3-config --configdir)" \
+        --with-x=yes \
+        --enable-fail-if-missing \
+        --enable-gui=auto \
         --enable-cscope \
         --enable-terminal
-    make -j8 VIMRUNTIMEDIR=/usr/local/share/vim/vim81
+    make -j8 VIMRUNTIMEDIR=/usr/local/share/vim/vim82
     sudo checkinstall 
+    popd
     popd
 
     # vundle - plugins
