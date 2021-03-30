@@ -76,6 +76,12 @@ build_cuda(){
 
 # vim
 build_vim(){
+    # NOTE(ycho): Prior setup such as
+    # sudo apt-get build-dep vim-gtk3
+    # may be necessary for GUI support.
+    # This step may fail without configuring
+    # `sources` option in Ubuntu Software settings.
+
     # build vim from source
     pushd "${LIBS_DIR}"
     git clone https://github.com/vim/vim.git
