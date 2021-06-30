@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Resolve commit to examine.
+COMMIT="$1"
+[ ! -z "${COMMIT}" ] && git branch --contains "${COMMIT}" 2>/dev/null;
+if [ $? -eq 0 ] ; then
+  shift
+else
+  COMMIT="HEAD"
+fi
+
+# Run the diff.
+git diff "${COMMIT}~1" "${COMMIT}" $@ #

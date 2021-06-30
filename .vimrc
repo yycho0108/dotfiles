@@ -138,6 +138,8 @@ noremap k gk
 " Map the key for toggling comments with vim-commentary
 nnoremap <leader>c <Plug>Commentary
 
+nnoremap <leader>p :echo expand('%:p')<cr>
+
 " Remap ctrlp to ctrl-t -- map it however you like, or stick with the
 " defaults. Additionally, in my OS, I remap caps lock to control. I never use
 " caps lock. This is highly recommended.
@@ -245,8 +247,13 @@ autocmd FileType python set equalprg=autopep8\ -
 set backspace=indent,eol,start
 " set splitbelow "vim 8.1 terminal setting
 
+let g:formatdef_autopep8 = "'autopep8 - --ignore E402 --aggressive --experimental --range '.a:firstline.' '.a:lastline"
 let g:autopep8_disable_show_diff=1
 let g:autopep8_max_line_length=79
+
+let g:formatdef_docformatter = "'docformatter - --range '.a:firstline.' '.a:lastline"
+let g:formatters_python = ['autopep8', 'docformatter']
+let g:run_all_formatters_python = 1
 
 set wildmode=longest,list,full
 set wildmenu
@@ -275,6 +282,10 @@ let g:formatters_cmake = ['my_cmake']
 let g:formatdef_my_json = '"python3 -m json.tool"'
 let g:formatters_json = ['my_json']
 
+" Javascript configuration
+let g:formatdef_my_javascript = '"js-beautify"'
+let g:formatters_javascript = ['my_javascript']
+
 let g:formatters_cuda = ['clangformat']
 " let g:autoformat_verbosemode=1
 
@@ -297,3 +308,44 @@ call toop#mapFunction('DoxAlign', "<leader>da")"
 set autochdir
 autocmd VimLeave * call system("xsel -ib", getreg('+'))
 
+command! Ctabs call s:Ctabs()
+function! s:Ctabs()
+  let files = {}
+  for entry in getqflist()
+    let filename = bufname(entry.bufnr)
+    let files[filename] = 1
+  endfor
+
+  for file in keys(files)
+    silent exe "tabedit ".file
+  endfor
+endfunction
+
+" quickfixopenall.vim
+"Author:
+"   Tim Dahlin
+"
+"Description:
+"   Opens all the files in the quickfix list for editing.
+"
+"Usage:
+"   1. Perform a vimgrep search
+"       :vimgrep /def/ *.rb
+"   2. Issue QuickFixOpenAll command
+"       :QuickFixOpenAll
+
+function!   QuickFixOpenAll()
+    if empty(getqflist())
+        return
+    endif
+    let s:prev_val = ""
+    for d in getqflist()
+        let s:curr_val = bufname(d.bufnr)
+        if (s:curr_val != s:prev_val)
+            exec "edit " . s:curr_val
+        endif
+        let s:prev_val = s:curr_val
+    endfor
+endfunction
+
+command! QuickFixOpenAll         call QuickFixOpenAll()

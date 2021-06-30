@@ -21,16 +21,24 @@ def parse_args(args):
 
 def main(args=sys.argv[1:]):
     args = parse_args(args)
-    root = Path(args.directory)
-    if not root.is_dir():
-        logging.error('Invalid directory : {}'.format(root))
-        return 1
     logging.debug(args)
-    files = root.glob(args.pattern)
+
+    if Path(args.pattern).is_absolute():
+        # Resolve absolute glob.
+        p = Path(args.pattern).relative_to(Path('/'))
+        files = Path('/').glob(str(p))
+    else:
+        # Resolve relative glob.
+        root = Path(args.directory)
+        if not root.is_dir():
+            logging.error('Invalid directory : {}'.format(root))
+            return 1
+        files = root.glob(args.pattern)
     # Optionally filter to files only.
     if args.file_only:
         files = [f for f in files if f.is_file()]
     latest = max(files, key=lambda f: f.stat().st_mtime)
+    # Output latest file
     print(latest)
     return 0
 

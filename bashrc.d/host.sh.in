@@ -13,3 +13,7 @@ mhwkill(){
 tf_begin(){
     source "${HOME}/Repos/Ravel/Venvs/tf_env/bin/activate"
 }
+
+th_begin(){
+    source "${HOME}/Repos/Ravel/Venvs/th_env/bin/activate"
+}
