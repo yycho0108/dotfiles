@@ -21,6 +21,7 @@
 "
 " If you have any questions, email me at pthrash@me.com
 set nocompatible " Fuck VI... That's for grandpas.
+
 filetype off
 
 let g:vundle_default_git_proto = 'git'
@@ -154,6 +155,8 @@ let g:ctrlp_max_height = 30
 set undofile
 
 " Youcompleteme
+" NOTE(ycho): Apparently encoding is required for YCM
+set encoding=utf-8
 let g:ycm_use_clangd = 1
 " let g:ycm_clangd_binary_path = $HOME . "/.vim/bundle/YouCompleteMe/third_party/ycmd/third_party/clangd/output/bin/clangd"
 let g:ycm_clangd_args = ["--completion-style=detailed"]
