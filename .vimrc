@@ -303,7 +303,7 @@ nmap <leader>xl :SidewaysRight<cr>
 nmap <leader>d :Docstring<cr>
 
 " DoxAlign
-call toop#mapFunction('DoxAlign', "<leader>da")"
+" call toop#mapFunction('DoxAlign', "<leader>da")"
 
 set autochdir
 autocmd VimLeave * call system("xsel -ib", getreg('+'))
