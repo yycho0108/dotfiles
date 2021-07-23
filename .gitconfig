@@ -1,0 +1,23 @@
+[user]
+	name = Yoonyoung Cho
+	email = jchocholate@gmail.com
+	signingkey = 65A4C0C8499B4EEE
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[rerere]
+	enabled = true
+[hub]
+	protocol = ssh
+[alias]
+    diffof = "git-diffof"
+    sbranch = "!git branch --sort=committerdate"
+    dbranch = "!git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'"
+    newb = "!git fetch origin && git checkout -b $1 origin/master && git push -u origin $1"
+	root = rev-parse --show-toplevel
+[core]
+	excludesfile = /home/jamiecho/.gitignore
+[init]
+	defaultBranch = main
