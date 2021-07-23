@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+# Command to generate: argbash .setup.sh.tmpl -o setup.sh
+#
+# ARG_OPTIONAL_BOOLEAN([unsafe], [u], [Unsafe mode], off)
+# ARG_HELP([Setup dotfiles in a new machine by installing symlinked config files.])
+# ARGBASH_GO
+# [ <-- needed because of Argbash
+
+UNSAFE="${_arg_unsafe}"
+
+list_dotfiles(){
+    # NOTE(ycho): Find repository in a somewhat robust manner.
+    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    DIR="$(readlink -f $DIR)"
+
+    #find . -maxdepth 1 -type f -name '\.*' -exec sh -c '
+    #for f do
+    #    git check-ignore -q "$f" || echo $f
+    #done
+    #' find-sh {} +
+
+    echo "${DIR}/.bashrc"
+    echo "${DIR}/.vimrc"
+    echo "${DIR}/.inputrc"
+    echo "${DIR}/.python_startup.py"
+}
+
+RMI="always"
+case "${UNSAFE}" in
+    on) RMI="never" ;;
+    *) RMI="always" ;;
+esac
+
+for SRC in $(list_dotfiles); do
+    DST="$HOME/$(basename ${SRC})"
+    if [ -f "${DST}" ]; then
+        rm --interactive="${RMI}" "${DST}"
+    fi
+    ln -sv "$(realpath ${SRC})" "${DST}"
+done
+
+# ] <-- needed because of Argbash
