@@ -234,8 +234,14 @@ nnoremap <leader>r :w \| term %:p<Enter>
 autocmd FileType python nnoremap <leader>r :w \| !python3 %:p<Enter>
 autocmd FileType cpp nnoremap <leader>r :w \| :CMake<Enter>
 
-autocmd FileType cpp setlocal formatoptions=crql
-autocmd FileType cuda setlocal formatoptions=crql
+" FIXME(ycho): Temporary measure for conveniently rebuilding tex.
+" Perhaps it would be preferable to set exrc instead.
+" autocmd FileType tex nnoremap <leader>r :w \| !./docker/run.sh<Enter>
+autocmd FileType tex nnoremap <leader>r :w \| !texwrap --directory %:p:h --main_file %:p<Enter>
+
+autocmd FileType cpp setlocal formatoptions=croql
+autocmd FileType cuda setlocal formatoptions=croql
+set formatoptions+=j
 
 " formatter ...
 " autocmd FileType python nnoremap <leader>f :Autopep8<Enter>
@@ -246,6 +252,7 @@ nnoremap <leader>x :YcmCompleter FixIt<Enter>
 " override =
 autocmd FileType python set equalprg=autopep8\ -
 
+autocmd FileType tex set wrap
 
 set backspace=indent,eol,start
 " set splitbelow "vim 8.1 terminal setting
@@ -291,6 +298,9 @@ let g:formatters_javascript = ['my_javascript']
 
 let g:formatters_cuda = ['clangformat']
 " let g:autoformat_verbosemode=1
+"
+let g:formatters_tex = ['latexindent']
+let g:formatdef_latexindent = '"latexindent -"'
 
 " vim-sideways
 omap aa <Plug>SidewaysArgumentTextobjA

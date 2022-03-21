@@ -17,3 +17,8 @@ tf_begin(){
 th_begin(){
     source "${HOME}/Repos/Ravel/Venvs/th_env/bin/activate"
 }
+
+pb_begin(){
+    source "${HOME}/Repos/Ravel/PhonebotSplit/pyphonebot-extra/env/bin/activate" && \
+        cd "${HOME}/Repos/Ravel/PhonebotSplit/pyphonebot-extra/"
+}

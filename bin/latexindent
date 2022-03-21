@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# FIXME(ycho): hardcoded directories everywhere
+PERL5LIB="/home/jamiecho/perl5/lib/perl5" \
+    PATH=${PATH}:/home/jamiecho/Repos/Ravel/latexindent.pl \
+    latexindent.pl \
+    "$@"
+
