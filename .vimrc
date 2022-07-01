@@ -56,6 +56,7 @@ Plugin 'StanAngeloff/php.vim'
 Plugin 'AndrewRadev/sideways.vim'
 Plugin 'DoxygenToolkit.vim'
 Plugin 'pixelneo/vim-python-docstring'
+Plugin 'https://github.com/rbonvall/vim-textobj-latex.git'
 " Plugin 'zxqfl/tabnine-vim'
 Plugin 'yycho0108/vim-toop'
 Plugin 'yycho0108/DoxAlign.vim'
@@ -300,7 +301,7 @@ let g:formatters_cuda = ['clangformat']
 " let g:autoformat_verbosemode=1
 "
 let g:formatters_tex = ['latexindent']
-let g:formatdef_latexindent = '"latexindent -"'
+let g:formatdef_latexindent = '"latexindent -g /dev/null -"'
 
 " vim-sideways
 omap aa <Plug>SidewaysArgumentTextobjA

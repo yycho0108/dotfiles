@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 import argparse
 import logging
+import numpy as np
 
 
 def parse_args(args):
@@ -16,6 +17,8 @@ def parse_args(args):
                         type=str, default=str(Path.cwd().resolve()))
     parser.add_argument('-f', '--file-only', help='Only include files',
                         action='store_true')
+    parser.add_argument('-i', '--index', help='How many steps from the back?',
+            type=int, default=-1)
     return parser.parse_args(args)
 
 
@@ -37,9 +40,10 @@ def main(args=sys.argv[1:]):
     # Optionally filter to files only.
     if args.file_only:
         files = [f for f in files if f.is_file()]
-    latest = max(files, key=lambda f: f.stat().st_mtime)
-    # Output latest file
-    print(latest)
+    files=list(files)
+    times = [f.stat().st_mtime for f in files]
+    index = np.argsort(times)[args.index]
+    print(files[index])
     return 0
 
 
