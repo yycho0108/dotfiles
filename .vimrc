@@ -31,7 +31,7 @@ set runtimepath+=~/.vim/bundle/YouCompleteMe/
 call vundle#begin()
 
 " let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plugin 'https://github.com/VundleVim/Vundle.vim.git'
 Plugin 'https://github.com/Valloric/YouCompleteMe.git'
 Plugin 'https://github.com/alvan/vim-closetag.git'
 Plugin 'https://github.com/godlygeek/tabular.git'
