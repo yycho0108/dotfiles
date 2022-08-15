@@ -36,12 +36,10 @@ build_sys(){
 
 # python
 build_py(){
-    pip3 install -U pip
-    pip3 install setuptools --user --upgrade
-    pip3 install numpy --user --upgrade
-    pip3 install scipy --user --upgrade # requires some deps? don't remember
-    pip3 install sympy --user --upgrade
-    pip3 install matplotlib --user --upgrade
+    python3 -m pip install -U pip
+    python3 -m pip install setuptools --user --upgrade
+    python3 -m pip install numpy --user --upgrade
+    python3 -m pip install matplotlib --user --upgrade
 }
 
 # ROS
@@ -96,7 +94,7 @@ build_vim(){
         --enable-gui=auto \
         --enable-cscope \
         --enable-terminal
-    make -j8 VIMRUNTIMEDIR=/usr/local/share/vim/vim82
+    make -j8 VIMRUNTIME=/usr/local/share/vim/vim90 VIMRUNTIMEDIR=/usr/local/share/vim/vim90
     sudo checkinstall 
     popd
     popd
@@ -115,4 +113,5 @@ build(){
     build_vim
 }
 
+# build_py
 build_vim

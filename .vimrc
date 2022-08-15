@@ -57,6 +57,7 @@ Plugin 'https://github.com/AndrewRadev/sideways.vim.git'
 Plugin 'https://github.com/DoxygenToolkit.vim.git'
 Plugin 'https://github.com/pixelneo/vim-python-docstring.git'
 Plugin 'https://github.com/rbonvall/vim-textobj-latex.git'
+Plugin 'https://github.com/nvie/vim-flake8'
 Plugin 'https://github.com/yycho0108/vim-toop.git'
 Plugin 'https://github.com/yycho0108/DoxAlign.vim.git'
 
